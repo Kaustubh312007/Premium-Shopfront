@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Minimoq Store"
+description = "A premium lifestyle e-commerce storefront featuring curated fashion, accessories, and home products, with a responsive shopping experience, cart interactions, and newsletter signup."
+version = "1.0.0"
+id = "artifacts/minimoq-store"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 19577
+
+[services.development]
+run = "pnpm --filter @workspace/minimoq-store run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/minimoq-store", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/minimoq-store/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "19577"
+BASE_PATH = "/"
